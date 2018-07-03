@@ -1,6 +1,6 @@
 <?php
 session_start();
-$dbc = mysqli_connect('127.0.0.1','root','2012211338','Project');
+$dbc = mysqli_connect('127.0.0.1','root','XXXXXX','Project');
 $user_name = $_SESSION['user_name'];
 
 ?>
@@ -109,12 +109,12 @@ $user_name = $_SESSION['user_name'];
                         <?php
                         $interests = $_SESSION['user_interests'];
                         $reproject_query =  "SELECT * FROM Projects WHERE category LIKE '%$interests%' and status = 'funding' limit 1";
-                        $reproject = mysqli_fetch_array(mysqli_query($dbc,$reproject_query));
-                        if(mysqli_num_rows(mysqli_query($dbc,$reproject_query))>0)
+                        $reproject = mysqli_fetch_array(mysqli_query($dbc, $reproject_query));
+                        if(mysqli_num_rows(mysqli_query($dbc, $reproject_query))>0)
                         $proid = $reproject["proid"];
                         else{
                             $reproject_query1 =  "SELECT * FROM Projects WHERE status = 'funding' limit 1";
-                            $reproject1 = mysqli_fetch_array(mysqli_query($dbc,$reproject_query1));
+                            $reproject1 = mysqli_fetch_array(mysqli_query($dbc, $reproject_query1));
                             $proid = $reproject1["proid"];
                         }
 
@@ -134,15 +134,15 @@ $user_name = $_SESSION['user_name'];
                                     
                                 <?
                                 $follow_query = "SELECT * FROM Follow WHERE login_name1 = '$user_name'";
-                                $follow = mysqli_query($dbc,$follow_query);
+                                $follow = mysqli_query($dbc, $follow_query);
                                 if(mysqli_num_rows($follow)>0){
                                     while($rows=mysqli_fetch_assoc($follow)){
                                     $followname = $rows["login_name2"];
                                     $followpro_query = "SELECT * FROM Projects WHERE login_name = '$followname' AND status = 'funding' limit 1";
-                                    $followpro = mysqli_fetch_array(mysqli_query($dbc,$followpro_query));
+                                    $followpro = mysqli_fetch_array(mysqli_query($dbc, $followpro_query));
                                     $proid = $followpro["proid"];
 
-                                    if(mysqli_num_rows(mysqli_query($dbc,$followpro_query))>0){
+                                    if(mysqli_num_rows(mysqli_query($dbc, $followpro_query))>0){
                                     echo'<li><a href="project-detail.php?proid=';
                                     echo $proid;
                                     echo'"><img width="233" height="190" src="../images/fantasy-ll.jpg" /></a></li>';    
@@ -163,17 +163,17 @@ $user_name = $_SESSION['user_name'];
 
                             <?php
                             $likepro_query = "SELECT * FROM `Like` WHERE login_name = '$user_name'";
-                            $likepro = mysqli_query($dbc,$likepro_query);
-                            if(mysqli_num_rows($likepro)>0){
+                            $likepro = mysqli_query($dbc, $likepro_query);
+                            if(mysqli_num_rows($likepro) > 0){
                                     $var = 3;
                                     while($rows=mysqli_fetch_assoc($likepro)){
                                         $proid = $rows["proid"];
                                         $like_query = "SELECT COUNT(*) AS num FROM `Like` WHERE proid = '$proid'";
-                                        $like = mysqli_fetch_array(mysqli_query($dbc,$like_query));
+                                        $like = mysqli_fetch_array(mysqli_query($dbc, $like_query));
                                         $var_like = $like['num'];
 
                                         $detail_query ="SELECT * FROM Projects WHERE proid = '$proid'";
-                                        $detail = mysqli_fetch_array(mysqli_query($dbc,$detail_query));
+                                        $detail = mysqli_fetch_array(mysqli_query($dbc, $detail_query));
                                         echo'<div class="module1_';
                                         echo $var;
                                         echo' box">';
